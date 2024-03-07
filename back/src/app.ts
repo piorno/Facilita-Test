@@ -1,8 +1,10 @@
 import express, { Response, Request } from "express";
 import ClientesRoutes from './routes/clientes.routes'
 // const ProductRoutes = require("./routes/product.route");
-
+var cors = require('cors');
 const app = express();
+
+app.use(cors())
 
 /* A middleware that parses the body of the request and makes it available in the req.body object. */
 app.use(express.json());

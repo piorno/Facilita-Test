@@ -13,13 +13,13 @@ export default class ClientesModel {
     }
 
     async selectClientes() {
-        const clientes = await pool.query("SELECT nome, email, telefone FROM tb_clientes ORDER BY id")
+        const clientes = await pool.query("SELECT id, nome, email, telefone FROM tb_clientes ORDER BY id")
             .catch(err => console.error(err))
         return clientes?.rows
     }
 
     async selectOneClient(id: number) {
-        const cliente = await pool.query("SELECT nome, email, telefone FROM tb_clientes where id = $1", [id])
+        const cliente = await pool.query("SELECT id, nome, email, telefone FROM tb_clientes where id = $1", [id])
             .catch(err => console.error(err))
 
         if (cliente?.rowCount == 0) throw new Error("Cliente não encontrado");

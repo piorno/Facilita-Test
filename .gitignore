@@ -1,2 +1,3 @@
 back/node_modules/*
 data/postgres/*
+front/node_modules/*
