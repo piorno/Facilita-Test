@@ -7,19 +7,19 @@ export default class ClientesModel {
             .catch(err => console.error(err))
         if (clienteExist?.rowCount && clienteExist?.rowCount > 0) throw new Error("Cliente con essas credenciais já existe");
 
-        const insert = await pool.query("INSERT INTO tb_clientes (nome, email, telefone) values ($1, $2, $3) RETURNING id", [cliente.nome, cliente.email, cliente.telefone])
+        const insert = await pool.query("INSERT INTO tb_clientes (nome, email, telefone, x, y) values ($1, $2, $3, $4, $5) RETURNING id", [cliente.nome, cliente.email, cliente.telefone, cliente.x, cliente.y])
             .catch(err => console.error(err))
         return insert
     }
 
     async selectClientes() {
-        const clientes = await pool.query("SELECT id, nome, email, telefone FROM tb_clientes ORDER BY id")
+        const clientes = await pool.query("SELECT id, nome, email, telefone, x, y FROM tb_clientes ORDER BY id")
             .catch(err => console.error(err))
         return clientes?.rows
     }
 
     async selectOneClient(id: number) {
-        const cliente = await pool.query("SELECT id, nome, email, telefone FROM tb_clientes where id = $1", [id])
+        const cliente = await pool.query("SELECT id, nome, email, telefone, x, y FROM tb_clientes where id = $1", [id])
             .catch(err => console.error(err))
 
         if (cliente?.rowCount == 0) throw new Error("Cliente não encontrado");
@@ -41,5 +41,17 @@ export default class ClientesModel {
         const insert = await pool.query("UPDATE tb_clientes SET nome = $1, email = $2, telefone = $3 WHERE id = $4", [cliente.nome, cliente.email, cliente.telefone, cliente.id])
             .catch(err => console.error(err))
         return insert
+    }
+
+    async rotas() {
+        const clientes = await pool.query("SELECT id, nome, email, telefone, x, y, '' as order FROM tb_clientes where x is not null and y is not null")
+            .catch(err => console.error(err))
+        if (clientes?.rows && clientes?.rows.length > 0 ) {
+            return clientes?.rows
+        }
+
+        throw new Error("Não a cordenadas cadastradas");
+        
+
     }
 }

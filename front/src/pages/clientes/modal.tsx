@@ -1,4 +1,6 @@
-import { Box, Card, CardHeader, Grid, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardHeader, Grid, Modal, TextField } from "@mui/material";
+import { ClienteContext } from "../../contexts/clientes.context";
+import { useContext } from "react";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -13,8 +15,8 @@ const style = {
     flexGrow: 1,
 };
 
-export default function ModalClientes({ open, handleClose }: { open: boolean, handleClose: () => void }) {
-
+export default function ModalClientes({ open, handleClose, update }: { open: boolean, handleClose: () => void, update: boolean }) {
+    const { cliente, setClieteField, putCliente, postCliente, restCliente, errorCl } = useContext(ClienteContext);
     return (
         <Modal
             open={open}
@@ -28,29 +30,31 @@ export default function ModalClientes({ open, handleClose }: { open: boolean, ha
                     <CardHeader
                         title="Cliente"
                         action={
-                            <>
-                                {/* <Button>Cricket</Button>
-                                <Button>Football</Button>
-                                <Button>Badminton</Button> */}
-                            </>
+                            <Button onClick={handleClose} sx={{ color: "black" }}>X</Button>
                         }
                     />
                     <Grid container spacing={2} sx={{ width: "100%" }} paddingLeft={4} paddingBottom={4}>
-                        {/* 
-                            TODO 
-                            Placeholders
-                            valitade input email
-                            salvar
-                            criar
-                        */}
                         <Grid item xs={12} sx={{ width: "100%" }}>
-                            <TextField id="outlined-basic" label="Nome" variant="outlined" sx={{ width: "100%" }} />
+                            <TextField id="outlined-basic" label="Nome" variant="outlined" error={errorCl.nome.error} helperText={errorCl.nome.text} onChange={(e) => { setClieteField(e.target.value, "nome") }} value={cliente.nome} sx={{ width: "100%" }} />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField id="outlined-basic" label="Email" variant="outlined" sx={{ width: "100%" }} />
+                            <TextField id="outlined-basic" label="Email" variant="outlined" error={errorCl.email.error} helperText={errorCl.email.text} onChange={(e) => { setClieteField(e.target.value, "email") }} value={cliente.email} sx={{ width: "100%" }} />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField id="outlined-basic" label="Telefone" variant="outlined" sx={{ width: "100%" }} />
+                            <TextField id="outlined-basic" label="Telefone" variant="outlined" error={errorCl.telefone.error} helperText={errorCl.telefone.text} onChange={(e) => { setClieteField(e.target.value, "telefone") }} value={cliente.telefone} sx={{ width: "100%" }} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField id="outlined-basic" label="X" variant="outlined" error={errorCl.telefone.error} helperText={errorCl.telefone.text} onChange={(e) => { setClieteField(e.target.value, "x") }} value={cliente.x} sx={{ width: "100%" }} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField id="outlined-basic" label="Y" variant="outlined" error={errorCl.telefone.error} helperText={errorCl.telefone.text} onChange={(e) => { setClieteField(e.target.value, "y") }} value={cliente.y} sx={{ width: "100%" }} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            {update ?
+                                <Button onClick={() => { putCliente(); restCliente() }}>Salvar</Button>
+                                :
+                                <Button onClick={() => { postCliente(); restCliente() }}>Salvar</Button>
+                            }
                         </Grid>
                     </Grid>
                 </Card>

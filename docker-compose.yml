@@ -2,6 +2,35 @@ version: '3.1'
 
 services:
 
+  node:
+    build:
+      context: .
+      dockerfile: back/Dockerfile
+      target: base
+    volumes:
+      - ./back/src:/home/node/app/src
+    container_name: node-docker
+    # expose:
+    #   - '8000'
+    ports:
+      - '8000:8000'
+    # command: npm start
+
+  front:
+    build:
+      context: .
+      dockerfile: front/Dockerfile
+      target: base
+    volumes:
+      - ./front/src:/home/node/front/src
+    # container_name: front-docker
+    ports:
+      - '5173:5173'
+      - '4173:4173'
+      - '3000:3000'
+    tty: true
+    # command: npm start
+
   postgres:
     image: postgres
     volumes:

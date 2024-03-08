@@ -3,6 +3,8 @@ type Cliente = {
     nome: string,
     email: string,
     telefone: string
+    x?: number
+    y?: number
 }
 
 export {

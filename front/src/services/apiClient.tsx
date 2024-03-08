@@ -10,7 +10,7 @@ export function setupAPIClient(){
     api.interceptors.response.use(response => {
         return response;
     }, (error) => {
-        return Promise.reject(error)
+        return  Promise.resolve(error.response)
     })
 
     return api;

@@ -4,7 +4,12 @@ import ClientesRoutes from './routes/clientes.routes'
 var cors = require('cors');
 const app = express();
 
-app.use(cors())
+var corsOptions = {
+    origin: "*"
+};
+
+app.use(cors(corsOptions));
+
 
 /* A middleware that parses the body of the request and makes it available in the req.body object. */
 app.use(express.json());
