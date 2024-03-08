@@ -51,7 +51,7 @@ export default class ClientesController {
             if (!cliente.telefone) err.push({ message: "telefone precisa estar preenchido", field: "telefone" })
             if (err.length > 0) return res.status(400).send(err)
             await clienteDb.updateCliente(cliente);
-            return res.status(201).send('foi')
+            return res.status(200).send('foi')
 
         } catch (error: any) {
             return res.status(400).send(error.message)
@@ -59,7 +59,7 @@ export default class ClientesController {
 
     }
 
-    async teste(req: Request, res: Response) {
+    async rota(req: Request, res: Response) {
         let arr2 = [{ id: 0, x: 0, y: 0, order: 0 }]
         const arr = await clienteDb.rotas()
 

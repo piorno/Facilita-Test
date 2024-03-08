@@ -7,7 +7,7 @@ const router = express.Router();
  
 router.post('/', clientesController.createClientes);
 router.get('/', clientesController.getClientes);
-router.get('/calc', clientesController.teste);
+router.get('/calc', clientesController.rota);
 router.get('/:id', clientesController.getOneClientes);
 router.put('/:id', clientesController.updateClientes);
  
